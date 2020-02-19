@@ -12,7 +12,8 @@ output:
 # Load packages required
 library(knitr)
 library(magrittr)
-library(kableExtra)
+library(phsmethods)
+library(gt)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -21,13 +22,39 @@ table_contents <- data.frame(c("Text", "Text",
                                "Text", "Text",
                                "Text"),
                              c(1:5))
+
+pub_text <- c("Table 1 (Hospital Standardised Mortality Ratios)",
+              paste("Table 2 (NHSScotland, NHS Board and hospital overall", 
+                    "crude mortality trends and NHSScotland crude mortality", 
+                    "trends by demographics and quarter)"),
+              paste("Table 3 (Crude 30-day mortality from discharge and", 
+                    "Overall population crude mortality rates by NHS Board", 
+                    "and quarter)"))
 ```
 
-## Slide title
+## Why write a package?
 
-- Bullet point
-- Bullet point with *italic text*
-- Bullet point with **bold text**
+```{r, echo = FALSE}
+phsmethods::file_size(here::here("data")) %>%
+  dplyr::mutate(name = pub_text) %>%
+  gt() %>%
+  tab_style(style = cell_text(color = "white",
+                              weight = "bolder"),
+            locations = cells_column_labels(columns = vars(name, size))) %>%
+  tab_style(style = cell_text(color = "purple",
+                              decorate = "underline"),
+            locations = cells_body(columns = vars(name))) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_body(columns = vars(name, size))) %>%
+  tab_style(style = cell_fill(color = "purple4"),
+            locations = cells_column_labels(columns = vars(name, size))) %>%
+  tab_style(style = cell_borders(),
+            locations = cells_body(columns = everything(),
+                                   rows = everything())) %>%
+  cols_width(vars(name) ~ px(620),
+             TRUE ~ px(100)) %>%
+  cols_label(name = "File Name", size = "File and Size")
+```
 
 ## Slide title
 
