@@ -1,5 +1,5 @@
 ---
-title: "phsmethods R package"
+title: "phsmethods R Package"
 subtitle: "PHI useR Group"
 author: 'Jack Hannah <br> Transforming Publishing Programme <br>'
 date: "25 March 2020 <br><br> Slides: https://github.com/jackhannah95/phsmethods-slides"
@@ -11,17 +11,11 @@ output:
 ```{r setup, include = FALSE}
 # Load packages required
 library(knitr)
-library(magrittr)
+library(dplyr)
 library(phsmethods)
 library(gt)
 
-knitr::opts_chunk$set(echo = FALSE)
-
-# Create data frame for table
-table_contents <- data.frame(c("Text", "Text",
-                               "Text", "Text",
-                               "Text"),
-                             c(1:5))
+knitr::opts_chunk$set(echo = TRUE)
 
 pub_text <- c("Table 1 (Hospital Standardised Mortality Ratios)",
               paste("Table 2 (NHSScotland, NHS Board and hospital overall", 
@@ -34,56 +28,64 @@ pub_text <- c("Table 1 (Hospital Standardised Mortality Ratios)",
 
 ## Why write a package?
 
-```{r, echo = FALSE}
-phsmethods::file_size(here::here("data")) %>%
-  dplyr::mutate(name = pub_text) %>%
+## phsmethods::file_size()
+```{r}
+# All files in the data folder
+file_size(here::here("data"))
+```
+
+## phsmethods::file_size()
+```{r}
+# Excel files only
+file_size(here::here("data"), pattern = ".xlsx$")
+```
+
+## file_size() in practice
+This is the 'List of Tables' section from page 25 of the [2019-11-12 HSMR publication](https://www.isdscotland.org/Health-Topics/Quality-Indicators/Publications/2019-11-12/2019-11-12-HSMR-Report.pdf):
+
+```{r, echo = FALSE, size = "150%"}
+include_graphics(here::here("images", "2019-11-12_HSMR-Tables.jpg"))
+```
+
+## Recreate using file_size and [{gt}](https://github.com/rstudio/gt)
+```{r, results = "hide"}
+file_size(here::here("data"), pattern = ".xlsx?$") %>%
+  mutate(name = pub_text) %>%
   gt() %>%
-  tab_style(style = cell_text(color = "white",
-                              weight = "bolder"),
-            locations = cells_column_labels(columns = vars(name, size))) %>%
-  tab_style(style = cell_text(color = "purple",
+  tab_style(style = cell_borders(),
+            locations = cells_body(columns = everything(),
+                                   rows = everything())) %>%
+  tab_style(style = cell_text(color = "white", weight = "bolder"),
+            locations = cells_column_labels(columns = everything())) %>%
+  tab_style(style = cell_text(color = "purple", 
                               decorate = "underline"),
             locations = cells_body(columns = vars(name))) %>%
   tab_style(style = cell_text(weight = "bold"),
             locations = cells_body(columns = vars(name, size))) %>%
-  tab_style(style = cell_fill(color = "purple4"),
-            locations = cells_column_labels(columns = vars(name, size))) %>%
-  tab_style(style = cell_borders(),
-            locations = cells_body(columns = everything(),
-                                   rows = everything())) %>%
-  cols_width(vars(name) ~ px(620),
-             TRUE ~ px(100)) %>%
+  tab_style(style = cell_fill(color = "darkorchid4"),
+            locations = cells_column_labels(columns = everything())) %>%
+  cols_width(vars(name) ~ px(620), TRUE ~ px(75)) %>%
   cols_label(name = "File Name", size = "File and Size")
 ```
 
-## Slide title
-
-```{r out.width = "70%", fig.align = 'center'}
-include_graphics("images/value.png")
-```
-
-## This slide has two columns 
-<!-- It seems easier to do with htmltags than with other ways --> 
-<div style="float: left; width: 50%; text-align: left">
-* Bullet point
-* Bullet point with *italic text*
-* Bullet point with **bold text**
-</div>
-
-<div style="float: right; width: 50%;">
-```{r out.width = "100%", fig.align = 'right'}
-hist(rnorm(100))
-```
-</div>
-
-## Slide title
-
-[ISD homepage](http://www.isdscotland.org/)
-
-## Slide title
+## Recreate using file_size and [{gt}](https://github.com/rstudio/gt)
 
 ```{r, echo = FALSE}
-    kable(table_contents,
-          col.names = c("Column heading", "Column heading"),
-          format = "markdown")
+file_size(here::here("data"), pattern = ".xlsx?$") %>%
+  mutate(name = pub_text) %>%
+  gt() %>%
+  tab_style(style = cell_borders(),
+            locations = cells_body(columns = everything(),
+                                   rows = everything())) %>%
+  tab_style(style = cell_text(color = "white", weight = "bolder"),
+            locations = cells_column_labels(columns = everything())) %>%
+  tab_style(style = cell_text(color = "purple", 
+                              decorate = "underline"),
+            locations = cells_body(columns = vars(name))) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_body(columns = vars(name, size))) %>%
+  tab_style(style = cell_fill(color = "darkorchid4"),
+            locations = cells_column_labels(columns = everything())) %>%
+  cols_width(vars(name) ~ px(620), TRUE ~ px(75)) %>%
+  cols_label(name = "File Name", size = "File and Size")
 ```
