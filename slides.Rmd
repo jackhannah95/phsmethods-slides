@@ -1,8 +1,8 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle"
-author: 'Name <br> Organisation <br>'
-date: "Date <br><br> Slides: url to slides"
+title: "phsmethods R package"
+subtitle: "PHI useR Group"
+author: 'Jack Hannah <br> Transforming Publishing Programme <br>'
+date: "25 March 2020 <br><br> Slides: https://github.com/jackhannah95/phsmethods-slides"
 output:
   ioslides_presentation:
     css: my-theme.css
