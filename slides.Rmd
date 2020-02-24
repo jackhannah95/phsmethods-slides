@@ -26,11 +26,11 @@ pub_text <- c("Table 1 (Hospital Standardised Mortality Ratios)",
                     "and quarter)"))
 ```
 
-## Why write a package?
+## Why write [{phsmethods}](https://github.com/Health-SocialCare-Scotland/phsmethods)?
 
 - Benefit to PHS: lots of analysts do the same things in different ways - it's a waste of time and effort and causes inconsistencies
 
-- Benefit to developers: to learn how to write a 'real' package
+- Benefit to developers and contributors: to learn how to write a 'real' package
 
 ## file_size()
 ```{r}
@@ -121,3 +121,30 @@ paste0("(", qtr(data_end), ")")` ``**
 "\U2022"` `` In the `` `r
 english::ordinal(lubridate::quarter(data_end, fiscal_start = 4))` `` quarter of financial year `` `r
 fin_year(data_end)` ``, NHS Scotland contributed 23.1% (1,624 out of 7,026 self-reported twelve-week quits) towards the required annual LDP Standard. If this pattern continued for the remainder of the financial year, NHS Scotland would achieve 92.4% of the required Standard.
+
+## Other functions in phsmethods
+
+- `postcode()` formats improperly recorded postcodes
+- `qtr_end()` calculates the final month in a quarter
+- `qtr_next()` calculates the next quarter
+- `qtr_prev()` calculates the previous quarter
+
+## Future developments
+
+- The package needs a new maintainer - I'm leaving in April
+
+- Contributions from others in PHS - development is under way to develop functions to group ages into age bands and to turn geography codes into names
+
+- Build a [{pkgdown}](https://pkgdown.r-lib.org/) website?
+
+- Create functions for agreed-upon methodologies by the 'new SAG'
+
+## Contact and Links
+
+- Email: [jack.hannah1@nhs.net](mailto:jack.hannah1@nhs.net)
+
+- GitHub: [jackhannah95](https://github.com/jackhannah95)
+
+- [phsmethods GitHub repository](https://github.com/Health-SocialCare-Scotland/phsmethods)
+
+- [Blogpost](https://www.tidyverse.org/blog/2017/08/contributing/) by Jim Hester on contributing to open source software
