@@ -28,13 +28,17 @@ pub_text <- c("Table 1 (Hospital Standardised Mortality Ratios)",
 
 ## Why write a package?
 
-## phsmethods::file_size()
+- Benefit to PHS: lots of analysts do the same things in different ways - it's a waste of time and effort and causes inconsistencies
+
+- Benefit to developers: to learn how to write a 'real' package
+
+## file_size()
 ```{r}
 # All files in the data folder
 file_size(here::here("data"))
 ```
 
-## phsmethods::file_size()
+## file_size()
 ```{r}
 # Excel files only
 file_size(here::here("data"), pattern = ".xlsx$")
@@ -72,3 +76,48 @@ file_size(here::here("data"), pattern = ".xlsx?$") %>%
 
 ```{r, ref.label = "gt", echo = FALSE}
 ```
+
+## fin_year() and qtr() functions
+
+```{r}
+lubridate::today()
+
+fin_year(lubridate::today())
+qtr(lubridate::today())
+qtr(lubridate::today(), format = "short")
+```
+
+## fin_year() and qtr() in RMarkdown
+
+This is from the 'Main Points' section of the [2019-11-26 Smoking Cessation Services summary report](https://www.isdscotland.org/Health-Topics/Public-Health/Publications/2019-11-26/2019-11-26-SmokingCessationLDPstandard-Summary.pdf?):
+
+```{r, echo = FALSE, size = "200%"}
+include_graphics(here::here("images", "2019-11-26_Smoking-Cessation-Services.jpg"))
+```
+
+## fin_year() and qtr() in RMarkdown
+
+In RMarkdown:
+
+```{r}
+data_end <- lubridate::dmy(30062019)
+```
+
+During Quarter **`r lubridate::quarter(data_end, fiscal_start = 4)`** **`r paste0("(", qtr(data_end), ")")`**  
+`r "\U2022"` In the **`r english::ordinal(lubridate::quarter(data_end, fiscal_start = 4))`** quarter of financial year **`r fin_year(data_end)`**, NHS Scotland contributed 23.1% (1,624 out of 7,026 self-reported twelve-week quits) towards the required annual LDP Standard. If this pattern continued for the remainder of the financial year, NHS Scotland would achieve 92.4% of the required Standard.
+
+## fin_year() and qtr() in RMarkdown
+
+In RMarkdown:
+
+```{r}
+data_end <- lubridate::dmy(30062019)
+```
+
+**During Quarter `` `r
+lubridate::quarter(data_end, fiscal_start = 4)` `` `` `r
+paste0("(", qtr(data_end), ")")` ``**  
+`` `r
+"\U2022"` `` In the `` `r
+english::ordinal(lubridate::quarter(data_end, fiscal_start = 4))` `` quarter of financial year `` `r
+fin_year(data_end)` ``, NHS Scotland contributed 23.1% (1,624 out of 7,026 self-reported twelve-week quits) towards the required annual LDP Standard. If this pattern continued for the remainder of the financial year, NHS Scotland would achieve 92.4% of the required Standard.
