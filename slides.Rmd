@@ -48,7 +48,7 @@ include_graphics(here::here("images", "2019-11-12_HSMR-Tables.jpg"))
 ```
 
 ## Recreate using file_size and [{gt}](https://github.com/rstudio/gt)
-```{r, results = "hide"}
+```{r, gt, results = "hide"}
 file_size(here::here("data"), pattern = ".xlsx?$") %>%
   mutate(name = pub_text) %>%
   gt() %>%
@@ -70,22 +70,5 @@ file_size(here::here("data"), pattern = ".xlsx?$") %>%
 
 ## Recreate using file_size and [{gt}](https://github.com/rstudio/gt)
 
-```{r, echo = FALSE}
-file_size(here::here("data"), pattern = ".xlsx?$") %>%
-  mutate(name = pub_text) %>%
-  gt() %>%
-  tab_style(style = cell_borders(),
-            locations = cells_body(columns = everything(),
-                                   rows = everything())) %>%
-  tab_style(style = cell_text(color = "white", weight = "bolder"),
-            locations = cells_column_labels(columns = everything())) %>%
-  tab_style(style = cell_text(color = "purple", 
-                              decorate = "underline"),
-            locations = cells_body(columns = vars(name))) %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_body(columns = vars(name, size))) %>%
-  tab_style(style = cell_fill(color = "darkorchid4"),
-            locations = cells_column_labels(columns = everything())) %>%
-  cols_width(vars(name) ~ px(620), TRUE ~ px(75)) %>%
-  cols_label(name = "File Name", size = "File and Size")
+```{r, ref.label = "gt", echo = FALSE}
 ```
