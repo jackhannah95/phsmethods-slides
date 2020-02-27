@@ -2,7 +2,7 @@
 title: "phsmethods R Package"
 subtitle: "PHI useR Group"
 author: 'Jack Hannah <br> Transforming Publishing Programme <br>'
-date: "25 March 2020 <br><br> Slides: https://github.com/jackhannah95/phsmethods-slides"
+date: "25 February 2020 <br><br> Slides: https://github.com/jackhannah95/phsmethods-useR"
 output:
   ioslides_presentation:
     css: my-theme.css
